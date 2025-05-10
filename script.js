@@ -49,6 +49,7 @@ function playRound() {
     let winner = null;
     const humanSelection = getHumanChoice().toLowerCase();
     const computerSelection = getComputerChoice();
+    console.log(`You chose ${humanSelection}`);
     console.log(`Computer chooses ${computerSelection}`);
     winner = determineWinner(humanSelection, computerSelection);
     if (winner == "tie") {
@@ -70,15 +71,13 @@ function playGame() {
     let roundNumber = 0;
     while (roundNumber < 5) {
         winner = playRound();
-        if (winner == "tie") {
-            return;
-        }
-        else if (winner == "human") {
+        if (winner == "human") {
             humanScore += 1;
         }
         else if (winner == "computer") {
             computerScore += 1;
         }
+        roundNumber += 1;
     }
     console.log(`Game over!\nPlayer score: ${humanScore}\nComputer score: ${computerScore}`);
 }
