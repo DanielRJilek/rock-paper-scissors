@@ -53,5 +53,14 @@ function playRound() {
     const computerSelection = getComputerChoice();
     console.log(`Computer chooses ${computerSelection}`);
     winner = determineWinner(humanSelection, computerSelection);
-    
+    if (winner == "tie") {
+        console.log("Tie game!");
+    }
+    else if (winner == "human") {
+        console.log(`You win! ${humanSelection} beats ${computerSelection}`);
+    } 
+    else if (winner == "computer") {
+        console.log(`You lose! ${computerSelection} beats ${humanSelection}`);
+    }
+    return winner;
 }
