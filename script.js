@@ -1,6 +1,4 @@
 console.log("Hello World");
-let humanScore = 0;
-let computerScore = 0;
 
 function getComputerChoice() {
     let choice = Math.random();
@@ -64,3 +62,25 @@ function playRound() {
     }
     return winner;
 }
+
+function playGame() {
+    let humanScore = 0;
+    let computerScore = 0;
+    let winner = null;
+    let roundNumber = 0;
+    while (roundNumber < 5) {
+        winner = playRound();
+        if (winner == "tie") {
+            return;
+        }
+        else if (winner == "human") {
+            humanScore += 1;
+        }
+        else if (winner == "computer") {
+            computerScore += 1;
+        }
+    }
+    console.log(`Game over!\nPlayer score: ${humanScore}\nComputer score: ${computerScore}`);
+}
+
+playGame();
