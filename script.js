@@ -1,4 +1,22 @@
-console.log("Hello World");
+let humanScore = 0;
+let computerScore = 0;
+
+
+const buttons = document.querySelectorAll("button");
+const results = document.querySelector(".results");
+const scoreboard = document.querySelector(".scoreboard");
+
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        playRound(button.id);
+    });
+});
+
+function updateScore() {
+    scoreboard.textContent = `Human Score: ${humanScore}\nComputer Score: ${computerScore}`;
+}
+
+updateScore();
 
 function getComputerChoice() {
     let choice = Math.random();
@@ -45,41 +63,40 @@ function determineWinner(humanSelection, computerSelection) {
     }
 }
 
-function playRound() {
-    let winner = null;
-    const humanSelection = getHumanChoice().toLowerCase();
-    const computerSelection = getComputerChoice();
-    console.log(`You chose ${humanSelection}`);
-    console.log(`Computer chooses ${computerSelection}`);
-    winner = determineWinner(humanSelection, computerSelection);
-    if (winner == "tie") {
-        console.log("Tie game!");
+function playRound(string) {
+    if (humanScore > 4) {
+        gameOver("human");
     }
-    else if (winner == "human") {
-        console.log(`You win! ${humanSelection} beats ${computerSelection}`);
-    } 
-    else if (winner == "computer") {
-        console.log(`You lose! ${computerSelection} beats ${humanSelection}`);
+    else if (computerScore > 4) {
+        gameOver("computer");
     }
-    return winner;
-}
-
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
-    let winner = null;
-    let roundNumber = 0;
-    while (roundNumber < 5) {
-        winner = playRound();
-        if (winner == "human") {
-            humanScore += 1;
+    else {
+        let winner = null;
+        const humanSelection = string.toLowerCase();
+        const computerSelection = getComputerChoice();
+        winner = determineWinner(humanSelection, computerSelection);
+        if (winner == "tie") {
+            results.textContent = "Tie game!";
         }
+        else if (winner == "human") {
+            results.textContent = `You win! ${humanSelection} beats ${computerSelection}`;
+            humanScore+=1;
+            updateScore();
+            if (humanScore > 4) {
+                gameOver(winner);
+            }
+        } 
         else if (winner == "computer") {
-            computerScore += 1;
+            results.textContent = `You lose! ${computerSelection} beats ${humanSelection}`;
+            computerScore+=1;
+            updateScore();
+            if (computerScore > 4) {
+                gameOver(winner);
+            }
         }
-        roundNumber += 1;
     }
-    console.log(`Game over!\nPlayer score: ${humanScore}\nComputer score: ${computerScore}`);
 }
 
-playGame();
+function gameOver(winner) {
+    results.textContent = `Game over! The ${winner} wins!`;
+}
